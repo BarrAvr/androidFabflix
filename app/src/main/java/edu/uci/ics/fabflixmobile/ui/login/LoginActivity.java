@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private final String domain = "team_sravan_project1_war";
     private final String baseURL = "http://" + host + ":" + port + "/" + domain;
 
+    // Preparing project for demo
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
