@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -239,11 +240,11 @@ public class MovieListActivity extends AppCompatActivity {
         queue.add(updateListState);
     }
 
-    private void displayMovies(){
+    private void displayMovies() {
         String encodedText = textInput;
         try {
             encodedText = URLEncoder.encode(textInput, "UTF-8");
-        } catch (Exception e){
+        } catch (UnsupportedEncodingException e){
             e.printStackTrace();
             Log.d("encoding error", "encoding error");
         }
