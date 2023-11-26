@@ -13,7 +13,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import edu.uci.ics.fabflixmobile.data.NetworkManager;
 import edu.uci.ics.fabflixmobile.databinding.ActivityLoginBinding;
+import edu.uci.ics.fabflixmobile.ui.mainpage.MainPageActivity;
 import edu.uci.ics.fabflixmobile.ui.movielist.MovieListActivity;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,8 +33,10 @@ public class LoginActivity extends AppCompatActivity {
       To connect to your machine, you need to use the below IP address
      */
     private final String host = "10.0.2.2";
+//    private final String port = "8080";
     private final String port = "8080";
-    private final String domain = "cs122b_project2_login_cart_example_war";
+//    private final String domain = "cs122b_project2_login_cart_example_war";
+    private final String domain = "team_sravan_project1_war";
     private final String baseURL = "http://" + host + ":" + port + "/" + domain;
 
     @Override
@@ -57,17 +64,38 @@ public class LoginActivity extends AppCompatActivity {
         // request type is POST
         final StringRequest loginRequest = new StringRequest(
                 Request.Method.POST,
-                baseURL + "/api/login",
+//                baseURL + "/api/login",
+                baseURL + "/api/android-login",
                 response -> {
                     // TODO: should parse the json response to redirect to appropriate functions
                     //  upon different response value.
-                    Log.d("login.success", response);
-                    //Complete and destroy login activity once successful
-                    finish();
-                    // initialize the activity(page)/destination
-                    Intent MovieListPage = new Intent(LoginActivity.this, MovieListActivity.class);
-                    // activate the list page.
-                    startActivity(MovieListPage);
+//                    response.toString();
+                    try {
+                        JSONObject json = new JSONObject(response);
+                        if (json.get("status").toString().equals("success")){
+                            Log.d("login.success", "Login was successful");
+                            //Complete and destroy login activity once successful
+                            finish();
+                            // initialize the activity(page)/destination
+                            Intent MovieListPage = new Intent(LoginActivity.this, MainPageActivity.class);
+                            // activate the list page.
+                            startActivity(MovieListPage);
+                        }else{
+                            message.setText("Login Failed!");
+                            Log.d("login.success", "Login wasn't successful");
+//                            finish();
+                        }
+                    } catch (JSONException e) {
+                        Log.d("login.success", response);
+                    }
+//                    Log.d("login.success", response);
+//                    System.out.println("login.success: " + response.toString());
+//                    //Complete and destroy login activity once successful
+//                    finish();
+//                    // initialize the activity(page)/destination
+//                    Intent MovieListPage = new Intent(LoginActivity.this, MovieListActivity.class);
+//                    // activate the list page.
+//                    startActivity(MovieListPage);
                 },
                 error -> {
                     // error
