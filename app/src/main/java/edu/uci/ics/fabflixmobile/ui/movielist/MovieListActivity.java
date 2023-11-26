@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -239,7 +240,14 @@ public class MovieListActivity extends AppCompatActivity {
     }
 
     private void displayMovies(){
-        String url = "/api/search-results?type=general&title="+textInput+"&star=&year=&director=&sortBy=title&titleOrder=asc&ratingOrder=desc&page="+page+"&count="+pageCount;
+        String encodedText = textInput;
+        try {
+            encodedText = URLEncoder.encode(textInput, "UTF-8");
+        } catch (Exception e){
+            e.printStackTrace();
+            Log.d("encoding error", "encoding error");
+        }
+        String url = "/api/search-results?type=general&title="+encodedText+"&star=&year=&director=&sortBy=title&titleOrder=asc&ratingOrder=desc&page="+page+"&count="+pageCount;
         Log.d("URL:", url);
 
         final ArrayList<Movie> movies = new ArrayList<>();

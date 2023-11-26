@@ -64,8 +64,8 @@ public class LoginActivity extends AppCompatActivity {
         // request type is POST
         final StringRequest loginRequest = new StringRequest(
                 Request.Method.POST,
-//                baseURL + "/api/login",
-                baseURL + "/api/android-login",
+                baseURL + "/api/login",
+//                baseURL + "/api/android-login",
                 response -> {
                     // TODO: should parse the json response to redirect to appropriate functions
                     //  upon different response value.
